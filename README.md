@@ -65,7 +65,7 @@ will be placed inside your exploded share.war directory, so make sure your serve
 
 Now restart your server.
 
-### 2.4 Explore your customization:
+### 2.4 Explore your customization
 
 1. Create a new site and make sure to choose your usecase name as the "Type" in Share's create site dialog.  
    (In other words do NOT choose the usual "Collaboration Site")
@@ -118,6 +118,8 @@ Now restart your server.
    a) That your property can be viewed and edited  
       # Defined in the `<forms>` section in **&lt;company&gt;-&lt;usecase&gt;-config.xml**  
 
+6. the "Document Actions" panel (on the document details page) 
+
    b) That the doclib actions have been added here as well  
       # Defined in the `<forms>` section in **&lt;company&gt;-&lt;usecase&gt;-config.xml**  
 
@@ -126,17 +128,13 @@ Now restart your server.
 
 When your code is ready for distribution just:
 
-1. Use either
-
-   - `ant dist-jar` and place your jar files in your tomcat's **shared/lib** directories
-
-   OR
-
-   - `ant dist-amp` and use the Alfresco amp tool, described here: https://wiki.alfresco.com/wiki/AMP_Files
+1. Use either  
+   - `ant dist-jar` and place your jar files in your tomcat's **shared/lib** directories  
+   OR  
+   - `ant dist-amp` and use the Alfresco amp tool, described here: https://wiki.alfresco.com/wiki/AMP_Files  
 
 2. Send it to your boss and show him what you did in less than an hour ;-)
 
-Note!
-Make sure you don't end up with changes in both:
+**Note!** Make sure you don't end up with changes in both:
 * **shared/classes** - from running hotcopy-tomcat-zip
 * **shared/lib** - from running dist-jar and moving them into the lib folder
