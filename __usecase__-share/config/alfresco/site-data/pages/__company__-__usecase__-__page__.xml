@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+   <title>__pageXmlEscaped__</title>
+   <title-id>page.__company__-__usecase__-__page__.title</title-id>
+   <description>__companyXmlEscaped__ __usecaseXmlEscaped__ __pageXmlEscaped__ Page</description>
+   <description-id>page.__company__-__usecase__-__page__.description</description-id>
+   <template-instance>1-column</template-instance>
+   <authentication>user</authentication>
+   <components>
+
+      <component>
+         <region-id>title</region-id>
+         <sub-components>
+            <sub-component id="site-title">
+               <url>/components/title/collaboration-title</url>
+            </sub-component>
+            <sub-component id="site-navigation">
+               <url>/components/navigation/collaboration-navigation</url>
+            </sub-component>
+         </sub-components>
+      </component>
+
+      <component>
+         <region-id>column</region-id>
+         <sub-components>
+            <sub-component id="__company__-__usecase__-__pageWebscript__">
+               <url>/__company__/__usecase__/components/__pageWebscript__</url>
+            </sub-component>
+         </sub-components>
+      </component>
+
+   </components>
+</page>

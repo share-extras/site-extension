@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="__usecase__:model" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+   <!-- Metadata about the model -->
+   <description>__usecaseXmlEscaped__ Content Model</description>
+   <author>__companyXmlEscaped__</author>
+   <version>1.0</version>
+
+   <!-- Imports are required to allow references to definitions in other models -->
+   <imports>
+      <!-- Import Alfresco Dictionary Definitions -->
+      <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+      <!-- Import Alfresco Content Domain Model Definitions -->
+      <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+   </imports>
+
+   <!-- Define the URI and Prefix for this content model -->
+   <namespaces>
+      <namespace uri="http://www.__company__.com/model/__usecase__/1.0" prefix="__usecase__"/>
+   </namespaces>
+
+   <!-- Define constraints -->
+   <constraints>
+
+      <!-- Ensures that one of the allowed values is assigned -->
+      <constraint name="__usecase__:__orgProperty___constraint" type="LIST">
+         <parameter name="allowedValues">
+            <list>
+               <value>__value1XmlEscaped__</value>
+               <value>__value2XmlEscaped__</value>
+            </list>
+         </parameter>
+      </constraint>
+
+   </constraints>
+
+   <!-- Aspects -->
+   <aspects>
+
+      <!-- Marks a content item as having __orgAspect__ -->
+      <aspect name="__usecase__:__orgAspect__">
+         <title>__usecaseXmlEscaped__ __aspectXmlEscaped__</title>
+         <properties>
+
+            <!-- Adds a new metadata property to the __Usecase__ content -->
+            <!-- Constrains the value -->
+            <property name="__usecase__:__orgProperty__">
+               <title>__usecaseXmlEscaped__ __propertyXmlEscaped__</title>
+               <type>d:text</type>
+               <default>__value1XmlEscaped__</default>
+               <constraints>
+                  <constraint ref="__usecase__:__orgProperty___constraint" />
+               </constraints>
+            </property>
+
+         </properties>
+      </aspect>
+
+   </aspects>
+
+</model>

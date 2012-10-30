@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+
+   <!-- GLOBAL -->
+
+   <!-- Share config that always will be applied  -->
+   <bean id="cloud.custom.config" class="org.springframework.extensions.config.ConfigBootstrap" init-method="register">
+      <property name="configService" ref="web.config" />
+      <property name="configs">
+         <list>
+            <value>classpath:alfresco/web-extension/__company__-__usecase__-config.xml</value>
+         </list>
+      </property>
+   </bean>
+
+   <!-- I18N -->
+
+   <!-- Add __orgUsecase__ messages -->
+   <bean id="__company__.__usecase__.resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+      <property name="resourceBundles">
+         <list>
+            <value>alfresco.messages.__company__-__usecase__</value>
+         </list>
+      </property>
+   </bean>
+
+
+   <!-- DOCLIB -->
+
+   <!-- Has "__usecase__:__orgAspect__" evaluator -->
+   <bean id="__company__.__usecase__.evaluator.doclib.has__Aspect__Aspect" parent="evaluator.doclib.metadata.hasAspect">
+      <property name="aspects">
+         <list>
+            <value>__usecase__:__orgAspect__</value>
+         </list>
+      </property>
+   </bean>
+
+   <!-- Is "__usecase__:__orgProperty__" set to __orgValue1__ -->
+   <bean id="__company__.__usecase__.evaluator.doclib.is__Property____Value1__" parent="evaluator.doclib.metadata.value">
+      <property name="accessor" value="node.properties.__usecase__:__orgProperty__"/>
+      <property name="comparator">
+         <bean class="org.alfresco.web.evaluator.StringEqualsComparator">
+            <property name="value" value="__value1XmlEscaped__" />
+         </bean>
+      </property>
+   </bean>
+
+   <!-- Is "__usecase__:__orgProperty__" set to __orgValue2__ -->
+   <bean id="__company__.__usecase__.evaluator.doclib.is__Property____Value2__" parent="evaluator.doclib.metadata.value">
+      <property name="accessor" value="node.properties.__usecase__:__orgProperty__"/>
+      <property name="comparator">
+         <bean class="org.alfresco.web.evaluator.StringEqualsComparator">
+            <property name="value" value="__value2XmlEscaped__" />
+         </bean>
+      </property>
+   </bean>
+
+</beans>

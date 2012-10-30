@@ -1,0 +1,272 @@
+<project basedir="." default="help" name="Share Site Extension Project">
+
+   <taskdef resource="net/sf/antcontrib/antlib.xml">
+      <classpath>
+         <pathelement location="${basedir}/lib/ant-contrib.jar"/>
+      </classpath>
+   </taskdef>
+   <property name="ant.enable.asserts" value="true"/>
+
+   <target name="help">
+      <echo>
+         Share Site Extension Project
+         ============================
+
+         Will help you get a kickstart doing site based Share customizations by creating a fully working dev env for you.
+         It will create 2 projects, one for your Alfresco repository and one for Alfresco Share.
+
+         Usage:
+         ant create-project -Dcompany= -Dusecase= -Daspect= -Dproperty= -Dvalue1= -Dvalue2= -Dpage= -DpageWebscript=
+
+         Properties:
+         company       - Name of your company, used in UI and namespacing
+         usecase       - Name of your company, used in UI and namespacing
+         aspect        - Name of the aspect, namespaced with "usecase"
+         property      - Name of a "d:text" property (namespaced with "usecase", tied to "aspect" &amp; constrained to ["value1"|"value2"])
+         value1        - Default value of "property"
+         value2        - Second allowed value for "property"
+         page          - Name of custom site page
+         pageWebscript - Name of custom webscript placed on "page"
+
+         Tip!
+         Using funny characters isn't funny for these values, unless you like debugging...
+         In other words use only characters in the value for ALL parameters above.
+         Also make use of capitalized values. Do not worry about the casing, it will be dealt with.
+         I.e. Use "Acme" or "ACME" (rather than "acme")
+
+         Once done, read the README.html file in this ("share-site-extension") directory.
+      </echo>
+   </target>
+
+   <target name="create-project" depends="project.prepare" unless="project.busy">
+
+      <mkdir dir="../${companyLowercased}/"/>
+
+      <!--
+         Copy all files and make sure to change filenames when doing so
+      -->
+      <copy todir="../${companyLowercased}" enablemultiplemappings="true">
+         <fileset dir=".">
+            <include name="__usecase__-repo/**"/>
+            <include name="__usecase__-share/**"/>
+         </fileset>
+         <compositemapper>
+            <filtermapper>
+               <!-- Filename filters -->
+               <replacestring from="__company__" to="${companyLowercased}"/>
+               <replacestring from="__Company__" to="${CompanyCapitilized}"/>
+               <replacestring from="__orgUsecase__" to="${usecase}"/>
+               <replacestring from="__usecase__" to="${usecaseLowercased}"/>
+               <replacestring from="__Usecase__" to="${UsecaseCapitilized}"/>
+               <replacestring from="__orgAspect__" to="${aspect}"/>
+               <replacestring from="__aspect__" to="${aspectLowercased}"/>
+               <replacestring from="__Aspect__" to="${AspectCapitilized}"/>
+               <replacestring from="__orgProperty__" to="${propertyLowercased}"/>
+               <replacestring from="__property__" to="${propertyLowercased}"/>
+               <replacestring from="__Property__" to="${PropertyCapitilized}"/>
+               <replacestring from="__orgValue1__" to="${value1}"/>
+               <replacestring from="__value1__" to="${value1Lowercased}"/>
+               <replacestring from="__Value1__" to="${Value1Capitilized}"/>
+               <replacestring from="__orgValue2__" to="${value2}"/>
+               <replacestring from="__value2__" to="${value2Lowercased}"/>
+               <replacestring from="__Value2__" to="${Value2Capitilized}"/>
+               <replacestring from="__page__" to="${pageLowercased}"/>
+               <replacestring from="__Page__" to="${PageCapitilized}"/>
+               <replacestring from="__pageWebscript__" to="${pageWebscriptLowercased}"/>
+               <replacestring from="__PageWebscript__" to="${PageWebscriptCapitilized}"/>
+            </filtermapper>
+         </compositemapper>
+      </copy>
+
+      <!--
+         Copy files again (but only text files this time!)
+         Binary files will be corrupted otherwise when running through the tokenfilter
+      -->
+      <copy todir="../${companyLowercased}" enablemultiplemappings="true" overwrite="true">
+         <fileset dir=".">
+            <include name="__usecase__-repo/**"/>
+            <include name="__usecase__-share/**"/>
+
+            <exclude name="**/*.jar"/>
+            <exclude name="**/*.png"/>
+            <exclude name="**/*.gif"/>
+         </fileset>
+         <compositemapper>
+            <filtermapper>
+               <!-- Filename filters -->
+               <replacestring from="__company__" to="${companyLowercased}"/>
+               <replacestring from="__Company__" to="${CompanyCapitilized}"/>
+               <replacestring from="__orgUsecase__" to="${usecase}"/>
+               <replacestring from="__usecase__" to="${usecaseLowercased}"/>
+               <replacestring from="__Usecase__" to="${UsecaseCapitilized}"/>
+               <replacestring from="__orgAspect__" to="${aspect}"/>
+               <replacestring from="__aspect__" to="${aspectLowercased}"/>
+               <replacestring from="__Aspect__" to="${AspectCapitilized}"/>
+               <replacestring from="__orgProperty__" to="${propertyLowercased}"/>
+               <replacestring from="__property__" to="${propertyLowercased}"/>
+               <replacestring from="__Property__" to="${PropertyCapitilized}"/>
+               <replacestring from="__orgValue1__" to="${value1}"/>
+               <replacestring from="__value1__" to="${value1Lowercased}"/>
+               <replacestring from="__Value1__" to="${Value1Capitilized}"/>
+               <replacestring from="__orgValue2__" to="${value2}"/>
+               <replacestring from="__value2__" to="${value2Lowercased}"/>
+               <replacestring from="__Value2__" to="${Value2Capitilized}"/>
+               <replacestring from="__page__" to="${pageLowercased}"/>
+               <replacestring from="__Page__" to="${PageCapitilized}"/>
+               <replacestring from="__pageWebscript__" to="${pageWebscriptLowercased}"/>
+               <replacestring from="__PageWebscript__" to="${PageWebscriptCapitilized}"/>
+            </filtermapper>
+         </compositemapper>
+         <filterchain>
+            <tokenfilter>
+               <!-- Text content filters -->
+               <replacestring from="__company__" to="${companyLowercased}"/>
+               <replacestring from="__companyXmlEscaped__" to="${companyXmlEscaped}"/>
+               <replacestring from="__Company__" to="${CompanyCapitilized}"/>
+               <replacestring from="__orgCompany__" to="${company}"/>
+
+               <replacestring from="__usecase__" to="${usecaseLowercased}"/>
+               <replacestring from="__usecaseXmlEscaped__" to="${usecaseXmlEscaped}"/>
+               <replacestring from="__Usecase__" to="${UsecaseCapitilized}"/>
+               <replacestring from="__orgUsecase__" to="${usecase}"/>
+
+               <replacestring from="__aspect__" to="${aspectLowercased}"/>
+               <replacestring from="__aspectXmlEscaped__" to="${aspectXmlEscaped}"/>
+               <replacestring from="__Aspect__" to="${AspectCapitilized}"/>
+               <replacestring from="__orgAspect__" to="${aspect}"/>
+
+               <replacestring from="__property__" to="${propertyLowercased}"/>
+               <replacestring from="__propertyXmlEscaped__" to="${propertyXmlEscaped}"/>
+               <replacestring from="__Property__" to="${PropertyCapitilized}"/>
+               <replacestring from="__orgProperty__" to="${property}"/>
+
+               <replacestring from="__orgValue1__" to="${value1}"/>
+               <replacestring from="__value1__" to="${value1Lowercased}"/>
+               <replacestring from="__value1XmlEscaped__" to="${value1XmlEscaped}"/>
+               <replacestring from="__Value1__" to="${Value1Capitilized}"/>
+
+               <replacestring from="__value2__" to="${value2Lowercased}"/>
+               <replacestring from="__value2XmlEscaped__" to="${value2XmlEscaped}"/>
+               <replacestring from="__Value2__" to="${Value2Capitilized}"/>
+               <replacestring from="__orgValue2__" to="${value2}"/>
+
+               <replacestring from="__page__" to="${pageLowercased}"/>
+               <replacestring from="__pageXmlEscaped__" to="${pageLowercasedXmlEscaped}"/>
+               <replacestring from="__Page__" to="${PageCapitilized}"/>
+               <replacestring from="__orgPage__" to="${page}"/>
+
+               <replacestring from="__pageWebscript__" to="${pageWebscriptLowercased}"/>
+               <replacestring from="__pageWebscriptXmlEscaped__" to="${pageWebscriptXmlEscaped}"/>
+               <replacestring from="__PageWebscript__" to="${PageWebscriptCapitilized}"/>
+               <replacestring from="__orgPageWebscript__" to="${pageWebscript}"/>
+            </tokenfilter>
+         </filterchain>
+      </copy>
+
+      <echo>
+         A directory named "${companyLowercased}" has been created as a sibling to this directory.
+         It contains project structures for Repo &amp; Share customisations for the "${usecase}" usecase.
+      </echo>
+   </target>
+
+
+   <target name="project.prepare">
+
+      <assert name="company"/>
+      <assert name="usecase"/>
+      <assert name="aspect"/>
+      <assert name="property"/>
+      <assert name="value1"/>
+      <assert name="value2"/>
+      <assert name="page"/>
+      <assert name="pageWebscript"/>
+
+      <scriptdef language="javascript" name="capitalize">
+         <attribute name="string" />
+         <attribute name="to" />
+         var s = new String(attributes.get("string")).replace(/[^\w|^\d]/g, "");
+         project.setProperty(attributes.get("to"), s.replace( /^.|\s\S/g, function(a) { return a.toUpperCase(); }));
+      </scriptdef>
+
+      <scriptdef language="javascript" name="lowercase">
+         <attribute name="string" />
+         <attribute name="to" />
+         var s = new String(attributes.get("string")).replace(/[^\w|^\d]/g, "");
+         project.setProperty(attributes.get("to"), s.toLowerCase());
+      </scriptdef>
+
+      <scriptdef language="javascript" name="xmlEscape">
+         <attribute name="string" />
+         <attribute name="to" />
+         <![CDATA[
+         var s = new String(attributes.get("string"));
+         s = s.replace(/\&/g, "&amp;")
+         s = s.replace(/\"/g, "&quot;")
+         s = s.replace(/\'/g, "&apos;")
+         s = s.replace(/\</g, "&lt;")
+         s = s.replace(/\>/g, "&gt;")
+         project.setProperty(attributes.get("to"), s);
+         ]]>
+      </scriptdef>
+
+      <lowercase string="${company}" to="companyLowercased"/>
+      <capitalize string="${company}" to="CompanyCapitilized"/>
+      <xmlEscape string="${company}" to="companyXmlEscaped"/>
+      
+
+      <lowercase string="${usecase}" to="usecaseLowercased"/>
+      <capitalize string="${usecase}" to="UsecaseCapitilized"/>
+      <xmlEscape string="${usecase}" to="usecaseXmlEscaped"/>
+
+      <lowercase string="${aspect}" to="aspectLowercased"/>
+      <capitalize string="${aspect}" to="AspectCapitilized"/>
+      <xmlEscape string="${aspect}" to="aspectXmlEscaped"/>
+
+      <lowercase string="${property}" to="propertyLowercased"/>
+      <capitalize string="${property}" to="PropertyCapitilized"/>
+      <xmlEscape string="${property}" to="propertyXmlEscaped"/>
+
+      <lowercase string="${value1}" to="value1Lowercased"/>
+      <capitalize string="${value1}" to="Value1Capitilized"/>
+      <xmlEscape string="${value1}" to="value1XmlEscaped"/>
+
+      <lowercase string="${value2}" to="value2Lowercased"/>
+      <capitalize string="${value2}" to="Value2Capitilized"/>
+      <xmlEscape string="${value2}" to="value2XmlEscaped"/>
+
+      <lowercase string="${page}" to="pageLowercased"/>
+      <capitalize string="${page}" to="PageCapitilized"/>
+      <xmlEscape string="${page}" to="pageXmlEscaped"/>
+
+      <lowercase string="${pageWebscript}" to="pageWebscriptLowercased"/>
+      <capitalize string="${pageWebscript}" to="PageWebscriptCapitilized"/>
+      <xmlEscape string="${pageWebscript}" to="pageWebscriptXmlEscaped"/>
+
+      <echo message="${companyXmlEscaped}"/>
+      <condition property="project.busy">
+         <or>
+            <available file="../${companyLowercased}/${usecaseLowercased}-repo" type="dir"/>
+            <available file="../${companyLowercased}/${usecaseLowercased}-share" type="dir"/>
+         </or>
+      </condition>
+
+      <if>
+         <available file="../${companyLowercased}/${usecaseLowercased}-repo" type="dir"/>
+         <then>
+            <echo>
+            Error: Directory "${companyLowercased}" already has a "${usecaseLowercased}-repo" directory
+            </echo>
+         </then>
+      </if>
+
+      <if>
+         <available file="../${companyLowercased}/${usecaseLowercased}-share" type="dir"/>
+         <then>
+            <echo>
+            Error: Directory "${companyLowercased}" already has a "${usecaseLowercased}-share" directory
+            </echo>
+         </then>
+      </if>
+
+   </target>
+</project>

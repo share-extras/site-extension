@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+
+   <!-- Register __Company__ __orgUsecase__ models -->
+
+   <bean id="__company__.__usecase__.extension.dictionaryBootstrap" parent="dictionaryModelBootstrap"
+         depends-on="dictionaryBootstrap">
+      <property name="models">
+         <list>
+            <value>alfresco/extension/__company__-__usecase__-model.xml</value>
+         </list>
+      </property>
+   </bean>
+
+   <!-- Register __Company__ __orgUsecase__ actions -->
+
+   <bean id="__company__.__usecase__.set__Value2____Property__" parent="script">
+      <property name="scriptLocation">
+         <bean class="org.alfresco.repo.jscript.ClasspathScriptLocation">
+            <constructor-arg>
+               <value>alfresco/extension/script/__company__/__usecase__/set__Value2____Property__.js</value>
+            </constructor-arg>
+         </bean>
+      </property>
+      <property name="publicAction">
+         <value>false</value>
+      </property>
+   </bean>
+
+</beans>

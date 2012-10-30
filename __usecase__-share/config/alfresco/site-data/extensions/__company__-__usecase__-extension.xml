@@ -1,0 +1,187 @@
+<extension>
+
+   <!--
+      Note!
+
+      These modules are set to auto-deploy on startup, but can also be deployed and undeployed at:
+      http://localhost:8080/share/page/modules/deploy
+   -->
+
+   <modules>
+
+      <module>
+         <id>__companyXmlEscaped__ __usecaseXmlEscaped__ (1) Global changes</id>
+         <auto-deploy>true</auto-deploy>
+
+         <!-- No evaluator since these are global changes which always are applied -->
+
+         <!-- Enhance individual WebScripts when their paths match -->
+         <customizations>
+            <customization>
+               <targetPackageRoot>org.alfresco</targetPackageRoot>
+               <sourcePackageRoot>__company__.__usecase__.customizations</sourcePackageRoot>
+            </customization>
+         </customizations>
+
+      </module>
+   </modules>
+
+
+   <modules>
+      <module>
+         <id>__companyXmlEscaped__ __usecaseXmlEscaped__ (2) Site changes</id>
+         <auto-deploy>true</auto-deploy>
+
+         <!--
+            Base evaluator that decides if any of the customizations, components
+            or configurations should be used
+         -->
+         <evaluator type="site.module.evaluator">
+            <params>
+               <sites>.*</sites>
+               <sitePresets>__company__-__usecase__-preset</sitePresets>
+               <applyForNonSites>false</applyForNonSites>
+               <groups>.*</groups>
+            </params>
+         </evaluator>
+
+         <!--
+            Enhance individual WebScripts when their paths match
+         -->
+         <customizations>
+            <customization>
+               <targetPackageRoot>org.alfresco</targetPackageRoot>
+               <sourcePackageRoot>__company__.__usecase__.customizations-site</sourcePackageRoot>
+            </customization>
+         </customizations>
+
+
+         <!--
+            Add/replace/remove components to/in/from <@regions/> for the site here.
+            Will only be used when this module's base evaluator (site.module.evaluator) returns true.
+            To identify the scope, region-id & source-id use SurfBug to inspect the details of a webscript/components
+            on a page, it can be enabled at http://localhost:8081/share/service/index
+         -->
+         <components>
+
+            <!-- Remove Example: Tag Panel on "Document Details" page -->
+            <!--
+            <component>
+               <scope>template</scope>
+               <region-id>document-tags</region-id>
+               <source-id>document-details</source-id>
+               <sub-components>
+                  <sub-component id="default">
+                     <evaluations>
+                        <evaluation id="__company__-__usecase__-removeTags">
+                           <render>false</render>
+                        </evaluation>
+                     </evaluations>
+                  </sub-component>
+               </sub-components>
+            </component>
+            -->
+
+         </components>
+
+
+         <!--
+            Add Site specific config here.
+            Will only be merged when this module's base evaluator (site.module.evaluator) returns true
+         -->
+         <configurations>
+
+            <!--
+               Add mappings from pageId > url to the global/default SitePages map
+               (only required for pages that wants to add parameters)
+            -->
+            <config evaluator="string-compare" condition="SitePages">
+               <pages>
+                  <page id="__company__-__usecase__-__page__">__company__-__usecase__-__page__</page>
+               </pages>
+            </config>
+
+            <!-- Add Doclib Action config -->
+            <config evaluator="string-compare" condition="DocLibActions">
+
+               <actions>
+
+                  <!-- Apply __orgAspect__ aspect action -->
+                  <action id="__company__-__usecase__-add__Aspect__Aspect" type="javascript" label="__company__.__usecase__.actions.add__Aspect__Aspect.label"  icon="../../../__company__/__usecase__/components/documentlibrary/actions/add-__aspect__-aspect">
+                     <evaluator negate="true">__company__.__usecase__.evaluator.doclib.has__Aspect__Aspect</evaluator>
+                     <permissions>
+                        <permission allow="true">Write</permission>
+                     </permissions>
+                     <param name="function">onActionSimpleRepoAction</param>
+                     <param name="action">add-features</param>
+                     <param name="aspect-name">__usecase__:__orgAspect__</param>
+                     <param name="successMessage">__company__.__usecase__.actions.add__Aspect__Aspect.success</param>
+                     <param name="failureMessage">__company__.__usecase__.actions.add__Aspect__Aspect.failure</param>
+                  </action>
+
+                  <!-- Set __orgValue2__ __orgProperty__ action -->
+                  <action id="__company__-__usecase__-set__Value2____Property__" type="javascript" label="__company__.__usecase__.actions.set__Value2____Property__.label"  icon="../../../__company__/__usecase__/components/documentlibrary/actions/set-__value2__-__property__">
+                     <evaluator>__company__.__usecase__.evaluator.doclib.has__Aspect__Aspect</evaluator>
+                     <evaluator negate="true">__company__.__usecase__.evaluator.doclib.is__Property____Value2__</evaluator>
+                     <permissions>
+                        <permission allow="true">Write</permission>
+                     </permissions>
+                     <param name="function">onActionSimpleRepoAction</param>
+                     <param name="action">__company__.__usecase__.set__Value2____Property__</param>
+                     <param name="successMessage">__company__.__usecase__.actions.set__Value2____Property__.success</param>
+                     <param name="failureMessage">__company__.__usecase__.actions.set__Value2____Property__.failure</param>
+                  </action>
+
+               </actions>
+
+               <actionGroups>
+
+                  <!-- Add actions to Document Library -->
+                  <actionGroup id="document-browse">
+                     <action index="500" id="__company__-__usecase__-add__Aspect__Aspect" />
+                     <action index="510" id="__company__-__usecase__-set__Value2____Property__" />
+                  </actionGroup>
+
+                  <!-- Add actions to Document Details page -->
+                  <actionGroup id="document-details">
+                     <action index="500" id="__company__-__usecase__-add__Aspect__Aspect" />
+                     <action index="510" id="__company__-__usecase__-set__Value2____Property__" />
+                  </actionGroup>
+
+               </actionGroups>
+            </config>
+
+            <!-- Change the metadata displayed in the Document Library for nodes with the __orgAspect__ aspect -->
+            <config evaluator="string-compare" condition="DocumentLibrary">
+               <metadata-templates>
+                  <template id="__company__-__usecase__-__property__">
+                     <evaluator>__company__.__usecase__.evaluator.doclib.has__Aspect__Aspect</evaluator>
+                     <line index="10" id="date">{date}{size}</line>
+                     <line index="20" id="__usecase__:__property__">{__usecase_____orgProperty__ __company__.__usecase__.metadata.__property__}</line>
+                  </template>
+               </metadata-templates>
+            </config>
+
+            <!-- Add an indicator in the Document Library for nodes with the __orgAspect__ aspect -->
+            <config evaluator="string-compare" condition="DocumentLibrary">
+               <indicators>
+                  <indicator id="__company__-__usecase__-__property__" index="10" icon="../../../__company__/__usecase__/components/documentlibrary/indicators/__property__-16.png" label="__company__.__usecase__.indicator.__property__">
+                     <evaluator>__company__.__usecase__.evaluator.doclib.has__Aspect__Aspect</evaluator>
+                     <labelParam index="0">{jsNode.properties.__usecase_____orgProperty__}</labelParam>
+                  </indicator>
+               </indicators>
+            </config>
+
+            <!-- Add __orgProperty__ to the list of sortable fields -->
+            <config evaluator="string-compare" condition="DocumentLibrary">
+               <sorting>
+                  <sort label="__company__.__usecase__.label.__property__">__usecase__:__orgProperty__|true</sort>
+               </sorting>
+            </config>
+
+         </configurations>
+      </module>
+
+   </modules>
+
+</extension>

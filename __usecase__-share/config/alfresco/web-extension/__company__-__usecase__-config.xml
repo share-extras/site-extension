@@ -1,0 +1,16 @@
+<alfresco-config>
+
+   <!-- Global config that always will be applied (even when outside sites -->
+
+   <!-- Display __usecase__:__orgProperty__ in forms -->
+   <config evaluator="node-type" condition="cm:content">
+      <forms>
+         <form>
+            <field-visibility>
+               <show id="__usecase__:__orgProperty__" />
+            </field-visibility>
+         </form>
+      </forms>
+   </config>
+
+</alfresco-config>
