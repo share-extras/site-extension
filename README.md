@@ -110,18 +110,18 @@ Now restart your server.
   e) A "Set &lt;usecase&gt; &lt;property&gt; to &lt;value2&gt;" action (if you have "Write" permission)  
      # It will call a generated custom repo action that will update your custom property on the node.  
      # The property is defined in the repo's **&lt;company&gt;-&lt;usecase&gt;-model.xml**  
-     # The action is defined in `<actions>` section in **&lt;company&gt;-&lt;usecase&gt;-extension.xml**  
+     # The action is defined in the `<actions>` section in **&lt;company&gt;-&lt;usecase&gt;-extension.xml**  
 
    
-5. On the "Properties" panel (on the document details page) & "Edit properties" pages you will see
+5. In the "Properties" panel (on the Document Details page) & the "Edit properties" page you will see
 
    a) That your property can be viewed and edited  
       # Defined in the `<forms>` section in **&lt;company&gt;-&lt;usecase&gt;-config.xml**  
 
-6. the "Document Actions" panel (on the document details page) 
+6. In the "Document Actions" panel (on the Document Details page) 
 
-   b) That the doclib actions have been added here as well  
-      # Defined in the `<forms>` section in **&lt;company&gt;-&lt;usecase&gt;-config.xml**  
+   a) That the doclib actions have been added here as well  
+      # Defined in the `<actions>` section in **&lt;company&gt;-&lt;usecase&gt;-extension.xml**  
 
 
 ### 2.5 Distribution
@@ -132,9 +132,12 @@ When your code is ready for distribution just:
    - `ant dist-jar` and place your jar files in your tomcat's **shared/lib** directories  
    OR  
    - `ant dist-amp` and use the Alfresco amp tool, described here: https://wiki.alfresco.com/wiki/AMP_Files  
-
+  
 2. Send it to your boss and show him what you did in less than an hour ;-)
 
 **Note!** Make sure you don't end up with changes in both:
 * **shared/classes** - from running hotcopy-tomcat-zip
-* **shared/lib** - from running dist-jar and moving them into the lib folder
+* **shared/lib** - from running dist-jar and moving them into the lib folder 
+
+...because if you have the same changes deployed in both places it will be hard to know which one that acually
+is being used (event though the .jar probably will win).
