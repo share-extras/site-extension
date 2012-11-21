@@ -129,7 +129,8 @@ Now restart your server.
 When your code is ready for distribution just:
 
 1. Use either  
-   - `ant dist-jar` and place your jar files in your tomcat's **shared/lib** directories  
+   - `ant dist-jar` and place your jar files in your tomcat's **shared/lib** directories 
+     Note! Loading **.jar** files from **shared/lib** requires a Tomcat config change, described here: http://docs.alfresco.com/4.0/index.jsp?topic=%2Fcom.alfresco.enterprise.doc%2Ftasks%2Fconfigfiles-change-path.html
    OR  
    - `ant dist-amp` and use the Alfresco amp tool, described here: https://wiki.alfresco.com/wiki/AMP_Files  
   
