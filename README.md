@@ -129,15 +129,18 @@ Now restart your server.
 When your code is ready for distribution just:
 
 1. Use either  
-   - `ant dist-jar` and place your jar files in **${TOMCAT_HOME}/lib** directories  
-     OE  
+   - `ant dist-jar` and place your jar files in: **${TOMCAT_HOME}/lib** or **${TOMCAT_HOME}/shared/lib**  
+      Note! If the shared/lib is missing it must be created and added to tomcat loader as described here:  
+      http://docs.alfresco.com/4.0/index.jsp?topic=%2Fcom.alfresco.enterprise.doc%2Ftasks%2Fconfigfiles-change-path.html  
+     OR  
    - `ant dist-amp` and use the Alfresco amp tool, described here: https://wiki.alfresco.com/wiki/AMP_Files  
   
 2. Send it to your boss and show him what you did in less than an hour ;-)
 
-**Note!** Make sure you don't end up with changes in both:
+**Note!** Make sure you don't end up with changes deployed in multiple places:
 * **${TOMCAT_HOME}/shared/classes** - from running hotcopy-tomcat-zip
 * **${TOMCAT_HOME}/lib** - from running dist-jar and moving them into the lib folder 
+* **${TOMCAT_HOME}/shared/lib** - from running dist-jar and moving them into the lib folder 
 
 ...because if you have the same changes deployed in both places it will be hard to know which one that acually
 is being used (event though the .jar probably will win).
