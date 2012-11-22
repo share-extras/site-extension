@@ -65,7 +65,7 @@ will be placed inside your exploded share.war directory, so make sure your serve
 
 Now restart your server.
 
-### 2.4 Explore your customization
+## 3 Explore your customization
 
 1. Create a new site and make sure to choose your usecase name as the "Type" in Share's create site dialog.  
    (In other words do NOT choose the usual "Collaboration Site")
@@ -124,7 +124,7 @@ Now restart your server.
       # Defined in the `<actions>` section in **&lt;company&gt;-&lt;usecase&gt;-extension.xml**  
 
 
-### 2.5 Distribution
+## 4 Distribution
 
 When your code is ready for distribution just:
 
